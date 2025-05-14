@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { preloadCode } from "$app/navigation";
   import { onMount } from "svelte";
 
   type Card = {
@@ -7,13 +8,25 @@
   };
 
   const matchMap: Record<string, string> = {
-  "media1.jpeg": "media2.jpeg",
-  "media2.jpeg": "media1.jpeg",
-  "media3.jpeg": "media4.jpeg",
-  "media5.jpeg": "media6.jpeg",
+  "DMEMText.jpg": "smoothMuscle.jpg",
+  "smoothMuscle.jpg": "DMEMText.jpg",
+  "neurobasalMediaText.jpg": "neuronDiff.jpg",
+  "neuronDiff.jpg": "neurobasalMediaText.jpg",
+  "leukemiaCells.jpg": "rpmiText.jpg",
+  "rpmiText.jpg": "leukemiaCells.jpg",
+  "thermalCyclerText.jpg": "PCR.jpg",
+  "PCR.jpg": "thermalCyclerText.jpg",
+  "iBlot.jpg": "gelTransfer.jpg",
+  "gelTransfer.jpg": "iBlot.jpg",
+  "dnaLadder.jpg": "gelLadder.jpg",
+  "gelLadder.jpg": "dnaLadder.jpg",
+  "proteinLadder.jpg": "pageRuler.jpg",
+  "pageRuler.jpg": "proteinLadder.jpg",
+  "platinumSuperfi2.jpg": "DNAPolymerase.jpg",
+  "DNAPolymerase": "platinumSuperfi2.jpg"
 };
 
-  const imageNames: string[] = ["media1.jpeg", "media2.jpeg", "media3.jpeg", "media4.jpeg", "media5.jpeg", "media6.jpeg"];
+  const imageNames: string[] = ["DMEMText.jpg", "smoothMuscle.jpg", "neurobasalMediaText.jpg", "neuronDiff.jpg", "leukemiaCells.jpg", "rpmiText.jpg", "thermalCyclerText.jpg", "PCR.jpg", "gelTransfer.jpg", "iBlot.jpg", "dnaLadder.jpg", "gelLadder.jpg", "proteinLadder.jpg", "pageRuler.jpg", "platinumSuperfi2.jpg", "DNAPolymerase.jpg"];
   let cards: Card[] = [];
   let flipped: number[] = [];
   let matched: number[] = [];
@@ -54,9 +67,9 @@
 </script>
 
 <main class="min-h-screen bg-gray-900 text-white flex flex-col items-center py-10">
-  <h1 class="text-3xl font-bold mb-6">🃏 Match Game</h1>
+  <h1 class="text-3xl font-bold mb-6"> Match Game</h1>
 
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-5 gap-4">
     {#each cards as card, i}
       <button type="button" on:click={() => flipCard(i)} class="w-24 h-24 perspective">
         <div
@@ -65,9 +78,9 @@
       >
         <!-- Card back -->
         <div
-          class="absolute w-full h-full bg-blue-700 rounded flex items-center justify-center backface-hidden"
+          class="absolute w-full h-full bg-white rounded flex items-center text-sm text-rose-700 justify-center backface-hidden"
         >
-          ❓
+          ThermoFisher Scientific
         </div>
           <img
             src={`/images/${card.value}`}
