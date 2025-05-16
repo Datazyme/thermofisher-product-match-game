@@ -66,26 +66,26 @@
   onMount(() => resetGame());
 </script>
 
-<main class="min-h-screen min-w-screen bg-gray-900 text-white flex flex-col items-center py-10">
-  <h1 class="text-3xl font-bold mb-6"> Match Game</h1>
+<main class="min-h-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6"> Match Game</h1>
 
-  <div class="grid grid-cols-4 gap-2 lg:grid-cols-5 md:gap-20 sm:gap-2 mx-8 mt-10">
+  <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4">
     {#each cards as card, i}
-      <button type="button" on:click={() => flipCard(i)} class="w-20 h-20 perspective">
+      <button type="button" on:click={() => flipCard(i)} class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 perspective">
         <div
         class="w-full h-full transition-transform hover:scale-220 hover: z-1000 duration-500 transform-style-3d transition-transform duration-300"
         class:rotate-y-180={flipped.includes(i) || matched.includes(card.id)}
       >
         <!-- Card back -->
         <div
-          class="absolute w-full h-full bg-white rounded flex items-center text-sm sm: text-xs text-rose-700 justify-center backface-hidden sm: scale-50 md:scale-150"
+          class="absolute w-full h-full bg-white rounded flex items-center text-sm sm: text-xs text-rose-700 justify-center backface-hidden "
         >
           ThermoFisher Scientific
         </div>
           <img
             src={`/images/${card.value}`}
             alt="card"
-            class="absolute w-full h-full backface-hidden rounded transform rotate-y-180 object-cover"
+            class="absolute w-full h-full object-cover rounded backface-hidden transform rotate-y-180"
           />
         </div>
       </button>
