@@ -69,7 +69,7 @@
 <main class="min-h-screen min-w-screen bg-gray-900 text-white flex flex-col items-center py-10">
   <h1 class="text-3xl font-bold mb-6"> Match Game</h1>
 
-  <div class="grid grid-cols-4 gap-2 lg:grid-cols-5 lg:gap-20 sm:gap-2 mx-8 mt-10">
+  <div class="grid grid-cols-4 gap-2 lg:grid-cols-5 md:gap-20 sm:gap-2 mx-8 mt-10">
     {#each cards as card, i}
       <button type="button" on:click={() => flipCard(i)} class="w-20 h-20 perspective">
         <div
@@ -78,7 +78,7 @@
       >
         <!-- Card back -->
         <div
-          class="absolute w-full h-full bg-white rounded flex items-center text-sm sm: text-xs text-rose-700 justify-center backface-hidden lg:scale-150"
+          class="absolute w-full h-full bg-white rounded flex items-center text-sm sm: text-xs text-rose-700 justify-center backface-hidden sm: scale-50 md:scale-150"
         >
           ThermoFisher Scientific
         </div>
