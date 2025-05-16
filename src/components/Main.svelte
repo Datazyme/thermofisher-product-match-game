@@ -30,6 +30,8 @@
   let cards: Card[] = [];
   let flipped: number[] = [];
   let matched: number[] = [];
+  let fullscreenIndex: number | null = null;
+
 
   function shuffle(images: string[]): Card[] {
     return [...images]
@@ -38,6 +40,12 @@
   }
 
   function flipCard(index: number) {
+    fullscreenIndex = index;
+
+    setTimeout(() => {
+    fullscreenIndex = null;
+    }, 2000); // show fullscreen for 1 second
+
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(cards[index].id)) return;
 
     flipped = [...flipped, index];
@@ -68,29 +76,41 @@
 
 <main class="min-h-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
   <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6"> Match Game</h1>
+  {#if fullscreenIndex !== null}
+    <div class="fixed inset-0 bg-black opacity-70 z-40 pointer-events-none transition-opacity duration-500"></div>
+  {/if}
 
-  <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4">
-    {#each cards as card, i}
-      <button type="button" on:click={() => flipCard(i)} class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 perspective">
-        <div
-        class="w-full h-full transition-transform hover:scale-220 hover: z-1000 duration-500 transform-style-3d transition-transform duration-300"
-        class:rotate-y-180={flipped.includes(i) || matched.includes(card.id)}
-      >
-        <!-- Card back -->
-        <div
-          class="absolute w-full h-full bg-white rounded flex items-center text-sm sm: text-xs text-rose-700 justify-center backface-hidden "
+  <div class="relative w-full max-w-lg mx-auto">
+    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {#each cards as card, i}
+        <button type="button" on:click={() => flipCard(i)} class={`transition-all duration-500 ease-in-out 
+          ${fullscreenIndex === i 
+            ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:w-28 sm:h-28 md:w-55 md:h-55 lg:w-full lg:h-full z-40'
+            : 'relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 perpective'}
+        `}>
+          <div
+          class="relative w-full h-full transition-transform duration-500 transform-style-3d"
+          class:rotate-y-180={flipped.includes(i) || matched.includes(card.id)}
         >
-          ThermoFisher Scientific
-        </div>
-          <img
-            src={`/images/${card.value}`}
-            alt="card"
-            class="absolute w-full h-full object-cover rounded backface-hidden transform rotate-y-180"
-          />
-        </div>
-      </button>
-    {/each}
+          <!-- Card back -->
+          <div
+            class="absolute w-full h-full bg-white rounded flex items-center text-sm sm:text-xs text-rose-700 justify-center backface-hidden"
+          >
+            ThermoFisher Scientific
+          </div>
+            <img
+              src={`/images/${card.value}`}
+              alt="card"
+              class="absolute w-full h-full object-cover rounded backface-hidden transform rotate-y-180"
+            />
+          </div>
+        </button>
+      {/each}
+    </div>
+
   </div>
+
+
 
   <button
     on:click={resetGame}
