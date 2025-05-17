@@ -74,19 +74,19 @@
   onMount(() => resetGame());
 </script>
 
-<main class="min-h-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
+<main class="min-h-screen min-w-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
   <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6"> Match Game</h1>
   {#if fullscreenIndex !== null}
     <div class="fixed inset-0 bg-black opacity-70 z-40 pointer-events-none transition-opacity duration-500"></div>
   {/if}
 
-  <div class="relative w-full max-w-lg mx-auto">
-    <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4">
+  <div class="relative w-full h-full max-w-lg mx-auto">
+    <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
       {#each cards as card, i}
         <button type="button" on:click={() => flipCard(i)} class={`transition-all duration-500 ease-in-out 
           ${fullscreenIndex === i 
-            ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 sm:w-28 sm:h-28 md:w-55 md:h-55 lg:w-full lg:h-full z-40'
-            : 'relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 perpective'}
+            ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-45 h-45 sm:w-32 sm:h-32 md:w-55 md:h-55 lg:w-full lg:h-full z-40'
+            : 'relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32'}
         `}>
           <div
           class="relative w-full h-full transition-transform duration-500 transform-style-3d"
