@@ -114,8 +114,8 @@
   </div>
   
 
-  <div class="relative w-full h-full max-w-xl mx-auto p-4 lg:p-2">
-    <div class="grid grid-cols-3 md:grid-cols-4 p-2 lg:grid-cols-4 gap-4">
+  <div class="relative w-full h-full max-w-xl mx-auto lg:p-2">
+    <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
       {#each cards as card, i}
         <button type="button" on:click={() => flipCard(i)} class={`transition-all duration-500 ease-in-out 
           ${fullscreenIndex === i 
