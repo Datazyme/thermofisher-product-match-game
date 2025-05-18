@@ -31,7 +31,24 @@
   let flipped: number[] = [];
   let matched: number[] = [];
   let fullscreenIndex: number | null = null;
+  let timer = 0;
+  let timerInterval: number;
+  let isRunning = false;
 
+  function startTimer() {
+    if (!isRunning) {
+      isRunning = true;
+      timerInterval = setInterval(() => {
+        timer += 1;
+      }, 1000);
+    }
+  }
+
+  function formatTime(seconds: number): string {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
 
   function shuffle(images: string[]): Card[] {
     return [...images]
@@ -40,6 +57,7 @@
   }
 
   function flipCard(index: number) {
+    startTimer();
     fullscreenIndex = index;
 
     setTimeout(() => {
@@ -63,22 +81,37 @@
         flipped = [];
       }, 800);
     }
+
+    if (matched.length === cards.length) {
+      clearInterval(timerInterval);
+      isRunning = false;
+    }
+
   }
 
   function resetGame() {
     cards = shuffle(imageNames);
     flipped = [];
     matched = [];
+    clearInterval(timerInterval);
+    timer = 0;
+    isRunning = false;
   }
 
   onMount(() => resetGame());
 </script>
 
-<main class="min-h-screen min-w-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
+<main class="bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
+  <h1 class="text-rose-700">ThermoFisher Scientific</h1>
   <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6"> Match Game</h1>
   {#if fullscreenIndex !== null}
     <div class="fixed inset-0 bg-black opacity-70 z-40 pointer-events-none transition-opacity duration-500"></div>
   {/if}
+
+  <div class="text-center text-lg sm:text-xl font-semibold mb-4">
+    Time: {formatTime(timer)}
+  </div>
+  
 
   <div class="relative w-full h-full max-w-lg mx-auto">
     <div class="grid grid-cols-3 md:grid-cols-4 gap-4">
