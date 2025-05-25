@@ -8,25 +8,21 @@
   };
 
   const matchMap: Record<string, string> = {
-  "DMEMText.jpg": "smoothMuscle.jpg",
-  "smoothMuscle.jpg": "DMEMText.jpg",
   "neurobasalMediaText.jpg": "neuronDiff.jpg",
   "neuronDiff.jpg": "neurobasalMediaText.jpg",
   "leukemiaCells.jpg": "rpmiText.jpg",
   "rpmiText.jpg": "leukemiaCells.jpg",
-  "thermalCyclerText.jpg": "PCR.jpg",
-  "PCR.jpg": "thermalCyclerText.jpg",
+  "thermalCyclerText.jpg": "platinumSuperfi2.jpg",
+  "platinumSuperfi2.jpg": "thermalCyclerText.jpg",
   "iBlot.jpg": "gelTransfer.jpg",
   "gelTransfer.jpg": "iBlot.jpg",
-  "dnaLadder.jpg": "gelLadder.jpg",
-  "gelLadder.jpg": "dnaLadder.jpg",
+  "dnaLadder.jpg": "electrophoresisSystem.jpg",
+  "electrophoresisSystem.jpg": "dnaLadder.jpg",
   "proteinLadder.jpg": "pageRuler.jpg",
   "pageRuler.jpg": "proteinLadder.jpg",
-  "platinumSuperfi2.jpg": "DNAPolymerase.jpg",
-  "DNAPolymerase": "platinumSuperfi2.jpg"
 };
 
-  const imageNames: string[] = ["DMEMText.jpg", "smoothMuscle.jpg", "neurobasalMediaText.jpg", "neuronDiff.jpg", "leukemiaCells.jpg", "rpmiText.jpg", "thermalCyclerText.jpg", "PCR.jpg", "gelTransfer.jpg", "iBlot.jpg", "dnaLadder.jpg", "gelLadder.jpg", "proteinLadder.jpg", "pageRuler.jpg", "platinumSuperfi2.jpg", "DNAPolymerase.jpg"];
+  const imageNames: string[] = ["neurobasalMediaText.jpg", "neuronDiff.jpg", "leukemiaCells.jpg", "rpmiText.jpg", "thermalCyclerText.jpg", "gelTransfer.jpg", "iBlot.jpg", "dnaLadder.jpg", "proteinLadder.jpg", "pageRuler.jpg", "platinumSuperfi2.jpg", "electrophoresisSystem.jpg"];
   let cards: Card[] = [];
   let flipped: number[] = [];
   let matched: number[] = [];
@@ -82,7 +78,7 @@
       }, 800);
     }
 
-    if (matched.length === cards.length) {
+    if (matched.length + 2 === cards.length) {
       clearInterval(timerInterval);
       isRunning = false;
     }
@@ -102,14 +98,14 @@
 </script>
 
 <main class="min-h-screen min-w-screen bg-gray-900 text-white flex flex-col items-center px-4 py-6 sm:py-10">
-  <h1 class="text-rose-700 text-2xl sm:text-3xl md:text-4xl font-bold mb-6">ThermoFisher Scientific</h1>
-  <h1 class="text-2xl text-gray-200 sm:text-2xl md:text-3xl font-bold mb-6"> Match Game</h1>
+  <h1 class="text-rose-700 text-2xl sm:text-3xl md:text-4xl font-bold mb-2">ThermoFisher Scientific</h1>
+  <h1 class="text-2xl text-gray-200 sm:text-2xl md:text-3xl font-bold mb-2"> Match Game</h1>
   <h1 class="text-lg text-center">Match the products that go with each other or with their function</h1>
   {#if fullscreenIndex !== null}
     <div class="fixed inset-0 bg-black opacity-70 z-40 pointer-events-none transition-opacity duration-500"></div>
   {/if}
 
-  <div class="text-center text-lg sm:text-xl font-semibold mb-4 mt-4">
+  <div class="text-center text-lg sm:text-xl font-semibold mb-2 mt-2">
     Time: {formatTime(timer)}
   </div>
   
@@ -119,8 +115,8 @@
       {#each cards as card, i}
         <button type="button" on:click={() => flipCard(i)} class={`transition-all duration-500 ease-in-out 
           ${fullscreenIndex === i 
-            ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-45 h-45 md:w-55 md:h-55 lg:w-full lg:h-full z-40'
-            : 'relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32'}
+            ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-45 h-45 md:w-55 md:h-55 lg:w-45 lg:h-45 z-40'
+            : 'relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:h-24 lg:w-24'}
         `}>
           <div
           class="relative w-full h-full transition-transform duration-500 transform-style-3d"
@@ -128,7 +124,7 @@
         >
           <!-- Card back -->
           <div
-            class="absolute w-full h-full bg-white rounded flex items-center text-sm sm:text-xs text-rose-700 justify-center backface-hidden"
+            class="absolute w-25 h-25 bg-white rounded flex items-center text-sm sm:text-xs text-rose-700 justify-center backface-hidden"
           >
             ThermoFisher Scientific
           </div>
