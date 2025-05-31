@@ -146,6 +146,7 @@
   >
     Reset
   </button>
+  <h5 class="mt-10 text-sm">Created by Anastasia Kuzmin <span class="text-violet-400">(anastasia.kuzmin@thermofisher.com)</span></h5>
 </main>
 
 <style>
