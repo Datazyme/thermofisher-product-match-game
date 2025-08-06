@@ -58,32 +58,39 @@
       .sort(() => Math.random() - 0.5); //shuffles array more or less randomly.
   }
 
+  //takes index (index specified as number data type) of clicked card in cards array to flip, calls start timer, triggers fullscreenIndex
   function flipCard(index: number) {
     startTimer();
     fullscreenIndex = index;
 
+    //sets time fullscreenIndex is displayed, currently 2sec.
     setTimeout(() => {
     fullscreenIndex = null;
-    }, 2000); // show fullscreen for 1 second
+    }, 2000); // show fullscreen for 2 seconds
 
+    //checks if flipped array is true for any of these and if so exits function (return). 
+    //So if flipped array already has two cards or already contains index of flipped card or is alredy in matched array
     if (flipped.length === 2 || flipped.includes(index) || matched.includes(cards[index].id)) return;
 
-    flipped = [...flipped, index];
+    flipped = [...flipped, index]; //adds flipped cards index to the flipped array when above if statement is met
 
+    //checks for match based on matchMap array of objects.
     if (flipped.length === 2) {
       const [i1, i2] = flipped;
       const val1 = cards[i1].value;
       const val2 = cards[i2].value;
       const isMatch = matchMap[val1] === val2;
 
+      //sets time display of both cards (800s), if isMatch is true pushes cards into matched array
       setTimeout(() => {
         if (isMatch) {
           matched.push(cards[i1].id, cards[i2].id);
         }
-        flipped = [];
+        flipped = []; //resets flipped array
       }, 800);
     }
 
+    //end game. checks to see if all cards are matched including the last two cards displayed (+2) which match by default. stops timer.
     if (matched.length + 2 === cards.length) {
       clearInterval(timerInterval);
       isRunning = false;
@@ -91,6 +98,7 @@
 
   }
 
+  //resets game, empties relevant arrays and shuffles.
   function resetGame() {
     cards = shuffle(imageNames);
     flipped = [];
@@ -100,6 +108,8 @@
     isRunning = false;
   }
 
+  //svelte component similar to componentDidMount() in react. sets/resets game. 
+  // Makes game ready to play immediatly upon loading in browser, shuffles cards, resets timer
   onMount(() => resetGame());
 </script>
 
