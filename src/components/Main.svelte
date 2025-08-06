@@ -7,6 +7,9 @@
     id: number;
   };
 
+  //matchMap is a TypeScript object. Record<string, string> matches two different strings.
+  //This is used to match images with different values. So object for each match
+  //First string is a KEY that refers to an image file and the second is the VALUE referring to match image.
   const matchMap: Record<string, string> = {
   "neurobasalMediaText.jpg": "neuronDiff.jpg",
   "neuronDiff.jpg": "neurobasalMediaText.jpg",
@@ -23,14 +26,15 @@
 };
 
   const imageNames: string[] = ["neurobasalMediaText.jpg", "neuronDiff.jpg", "leukemiaCells.jpg", "rpmiText.jpg", "thermalCyclerText.jpg", "gelTransfer.jpg", "iBlot.jpg", "dnaLadder.jpg", "proteinLadder.jpg", "pageRuler.jpg", "platinumSuperfi2.jpg", "electrophoresisSystem.jpg"];
-  let cards: Card[] = [];
-  let flipped: number[] = [];
-  let matched: number[] = [];
-  let fullscreenIndex: number | null = null;
-  let timer = 0;
-  let timerInterval: number;
-  let isRunning = false;
+  let cards: Card[] = []; //holds card objects referencing images in imageNames
+  let flipped: number[] = []; //tracks indices of flipped cards which are pushed into this array
+  let matched: number[] = []; //stores indices of matched cards from flipped, are then ignored by "flipped"
+  let fullscreenIndex: number | null = null; //displays flipped card zoomed in. Once timer runs out it is reset to null.
+  let timer = 0; //timer for entire game in seconds, counts up every second
+  let timerInterval: number; //reference to inveralID, which incremenets timer in seconds, updates timer above, can be cleared to stop timer
+  let isRunning = false; //
 
+  //function that starts timer, sets interval and updates timer
   function startTimer() {
     if (!isRunning) {
       isRunning = true;
@@ -40,16 +44,18 @@
     }
   }
 
+  //To display elapsed time, converts seconds to minutes, converts to string to pad to two digits
   function formatTime(seconds: number): string {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
     const s = (seconds % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
   }
 
+  //Shuffles cards (strings) from imageNames and returns the new/shuffled array Card[] of card objects. Each has random id.
   function shuffle(images: string[]): Card[] {
-    return [...images]
-      .map((value) => ({ value, id: Math.random() }))
-      .sort(() => Math.random() - 0.5);
+    return [...images] //clones images from imageNames to create new array using spread operator
+      .map((value) => ({ value, id: Math.random() })) //transforms image filename into card object. use image filename (value) and generating random/unique id for each card to make object value: "", id: ""
+      .sort(() => Math.random() - 0.5); //shuffles array more or less randomly.
   }
 
   function flipCard(index: number) {
